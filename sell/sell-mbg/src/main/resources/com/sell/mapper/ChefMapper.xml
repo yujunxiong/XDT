@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sell.mapper.ChefMapper">
+  <resultMap id="BaseResultMap" type="com.sell.model.Chef">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="chef_name" jdbcType="VARCHAR" property="chefName" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="album_pics" jdbcType="VARCHAR" property="albumPics" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="working_years" jdbcType="INTEGER" property="workingYears" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, chef_name, tel, score, price, intro, pic, album_pics, signature, working_years, 
+    company_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_chef
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_chef
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sell.model.Chef">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_chef (chef_name, tel, score, 
+      price, intro, pic, 
+      album_pics, signature, working_years, 
+      company_id)
+    values (#{chefName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{score,jdbcType=DOUBLE}, 
+      #{price,jdbcType=DECIMAL}, #{intro,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
+      #{albumPics,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, #{workingYears,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sell.model.Chef">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_chef
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="chefName != null">
+        chef_name,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="intro != null">
+        intro,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="albumPics != null">
+        album_pics,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="workingYears != null">
+        working_years,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="chefName != null">
+        #{chefName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="intro != null">
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="albumPics != null">
+        #{albumPics,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="workingYears != null">
+        #{workingYears,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update s_chef
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.chefName != null">
+        chef_name = #{record.chefName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=DOUBLE},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.intro != null">
+        intro = #{record.intro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic != null">
+        pic = #{record.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.albumPics != null">
+        album_pics = #{record.albumPics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null">
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workingYears != null">
+        working_years = #{record.workingYears,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update s_chef
+    set id = #{record.id,jdbcType=INTEGER},
+      chef_name = #{record.chefName,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=DOUBLE},
+      price = #{record.price,jdbcType=DECIMAL},
+      intro = #{record.intro,jdbcType=VARCHAR},
+      pic = #{record.pic,jdbcType=VARCHAR},
+      album_pics = #{record.albumPics,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      working_years = #{record.workingYears,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sell.model.Chef">
+    update s_chef
+    <set>
+      <if test="chefName != null">
+        chef_name = #{chefName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="intro != null">
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="albumPics != null">
+        album_pics = #{albumPics,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="workingYears != null">
+        working_years = #{workingYears,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sell.model.Chef">
+    update s_chef
+    set chef_name = #{chefName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DOUBLE},
+      price = #{price,jdbcType=DECIMAL},
+      intro = #{intro,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      album_pics = #{albumPics,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      working_years = #{workingYears,jdbcType=INTEGER},
+      company_id = #{companyId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 新增厨师信息 -->
+   <insert id="add" parameterType="com.sell.model.request.Chefparams">
+    insert into s_chef
+      (<if test="chefName != null">
+        chef_name,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="intro != null">
+        intro,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="albumPics != null">
+        album_pics,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="workingYears != null">
+        working_years,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="putaway != null">
+        putaway
+      </if>
+      )
+   values (
+      <if test="chefName != null">
+        #{chefName},
+      </if>
+      <if test="tel != null">
+        #{tel},
+      </if>
+      <if test="price != null">
+        #{price},
+      </if>
+      <if test="intro != null">
+        #{intro},
+      </if>
+      <if test="pic != null">
+        #{pic},
+      </if>
+      <if test="albumPics != null">
+        #{albumPics},
+      </if>
+      <if test="signature != null">
+        #{signature},
+      </if>
+      <if test="workingYears != null">
+        #{workingYears},
+      </if>
+      <if test="companyId != null">
+        #{companyId},
+      </if>
+       <if test="putaway != null">
+        #{putaway}
+      </if>
+)
+  </insert>
+  
+  <!-- 查找厨师列表 -->
+  <select id="getChefList" resultType="com.sell.model.vo.ChefVo">
+  		SELECT 
+			c.id,
+			c.chef_name,
+			c.pic,
+			c.price,
+			c.album_pics,
+			c.intro,
+			c.signature,
+			c.tel,
+			c.working_years,
+			(SELECT ROUND(SUM(score)/COUNT(*),1) FROM s_evaluate WHERE type=1 AND chef_id=c.id) score,
+			t.id companyId,
+			t.company_name companyName,
+			t.address companyAddress
+		FROM s_chef c
+		LEFT JOIN s_turnkey_company t ON t.id=c.company_id 
+		WHERE c.putaway=1
+		<if test="dates!=null and dates!=''">
+			AND c.id NOT IN
+			(
+				SELECT 
+					c.id
+				FROM s_chef c
+				LEFT JOIN s_chef_calendar cc ON c.id=cc.chef_id
+				WHERE 
+				<foreach collection="dates" item="date" index="index" open="(" separator="OR" close=")">
+	           	 	#{date} BETWEEN cc.start_time AND cc.end_time
+	     		</foreach>
+	     		GROUP BY c.id
+			)
+		</if>
+		<if test="code!=null and code!=''">
+			AND t.town_code=#{code}
+		</if>
+		<if test="keyWord!=null and keyWord!=''">
+			AND c.chef_name LIKE '%${keyWord}%'
+		</if>
+		<if test="rank==0">
+			ORDER BY c.price
+		</if>
+		<if test="rank==1">
+			ORDER BY c.price DESC
+		</if>
+  </select>
+  <resultMap type="com.sell.model.vo.ChefVo" id="chefVo">
+  		<id column="cid" jdbcType="INTEGER" property="id" />
+	    <result column="chef_name" jdbcType="VARCHAR" property="chefName" />
+	    <result column="tel" jdbcType="VARCHAR" property="tel" />
+	    <result column="score" jdbcType="DOUBLE" property="score" />
+	    <result column="price" jdbcType="DECIMAL" property="price" />
+	    <result column="intro" jdbcType="VARCHAR" property="intro" />
+	    <result column="pic" jdbcType="VARCHAR" property="pic" />
+	    <result column="album_pics" jdbcType="VARCHAR" property="albumPics" />
+	    <result column="signature" jdbcType="VARCHAR" property="signature" />
+	    <result column="working_years" jdbcType="INTEGER" property="workingYears" />
+	    <result column="companyId" jdbcType="INTEGER" property="companyId" />
+	    <result column="companyName" jdbcType="INTEGER" property="companyName" />
+	    <result column="companyAddress" jdbcType="INTEGER" property="companyAddress" />
+	    	<collection property="setMeal" ofType="com.sell.model.SetMeal">
+		    	<id column="mid" jdbcType="INTEGER" property="id" />
+			    <result column="name" jdbcType="VARCHAR" property="name" />
+			    <result column="cold_dish_num" jdbcType="INTEGER" property="coldDishNum" />
+			    <result column="hot_dish_num" jdbcType="INTEGER" property="hotDishNum" />
+			    <result column="fruit_num" jdbcType="INTEGER" property="fruitNum" />
+			    <result column="dessert_num" jdbcType="INTEGER" property="dessertNum" />
+			    <result column="realPrice" jdbcType="INTEGER" property="anticipatedPrice" />
+		    </collection>
+	  </resultMap>
+  <!-- 查找厨师详情 -->
+  <select id="selectChefInfo" resultMap="chefVo">
+  		SELECT 
+			c.id cid,
+			c.chef_name,
+			c.pic,
+			c.price,
+			c.album_pics,
+			c.intro,
+			c.signature,
+			c.tel,
+			c.working_years,
+			(SELECT ROUND(SUM(score)/COUNT(*),1) FROM s_evaluate WHERE type=1 AND chef_id=c.id) score,
+			t.id companyId,
+			t.company_name companyName,
+			t.address companyAddress,
+			s.id mid,
+			s.name,
+			s.cold_dish_num,
+			s.hot_dish_num,
+			s.fruit_num,
+			s.dessert_num,
+			ROUND((SELECT SUM(d.price) FROM s_dish d LEFT JOIN s_meal_dish m ON m.dish_id=d.id WHERE m.meal_id=s.id)) realPrice
+		FROM s_chef c
+		LEFT JOIN s_turnkey_company t ON t.id=c.company_id 
+		LEFT JOIN s_set_meal s ON c.id=s.chef_id AND s.set_default=1
+		WHERE c.id=#{chefId}
+  </select>
+  <select id="selectCalendar" resultType="com.sell.model.ChefCalendar">
+  		SELECT * 
+  		FROM s_chef_calendar 
+  		WHERE del=0 AND start_time &gt;=DATE_FORMAT(#{date},'%Y-%m-%d') and chef_id=#{chefId}
+  </select>
+  
+  <!-- 更新厨师 -->
+  <update id="update" parameterType="com.sell.model.request.Chefparams">
+      update s_chef
+    <set>
+      <if test="chefName != null">
+        chef_name = #{chefName},
+      </if>
+      <if test="tel != null">
+        tel = #{tel},
+      </if>
+      <if test="price != null">
+        price = #{price},
+      </if>
+      <if test="intro != null">
+        intro = #{intro},
+      </if>
+      <if test="pic != null">
+        pic = #{pic},
+      </if>
+      <if test="albumPics != null">
+        album_pics = #{albumPics},
+      </if>
+      <if test="signature != null">
+        signature = #{signature},
+      </if>
+      <if test="workingYears != null">
+        working_years = #{workingYears},
+      </if>
+      <if test="putaway != null">
+        putaway =#{putaway}
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+ <!--  厨师列表 -->
+ <select id="list" resultType="com.sell.model.Chef" >
+     SELECT
+		c.id,
+		c.chef_name chefName,
+		c.tel,
+		c.price,
+		c.working_years workingYears,
+		c.putaway
+	FROM
+		s_chef c LEFT JOIN s_turnkey_company t ON c.company_id=t.id
+     WHERE 
+          t.token=#{token}
+	   <if test="chefNameOrTel !=null">
+	      AND (c.chef_name LIKE '%${chefNameOrTel}%' OR c.tel = #{chefNameOrTel})
+	   </if>
+	   <if test="putaway != null">
+	       AND c.putaway = #{putaway}
+	   </if>
+   
+  </select>
+	<!-- 查询公司id -->
+	<select id="getCompanyId" parameterType="java.lang.String" resultType="java.lang.Integer">
+	      SELECT id FROM s_turnkey_company WHERE token=#{token} AND del=1
+	</select>
+ 
+</mapper>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sell.mapper.DishCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.sell.model.DishCategory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dish_category_name" jdbcType="VARCHAR" property="dishCategoryName" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, dish_category_name, rank, del
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_dish_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_dish_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sell.model.DishCategory">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_dish_category (dish_category_name, rank, del
+      )
+    values (#{dishCategoryName,jdbcType=VARCHAR}, #{rank,jdbcType=INTEGER}, #{del,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sell.model.DishCategory">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_dish_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dishCategoryName != null">
+        dish_category_name,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="del != null">
+        del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dishCategoryName != null">
+        #{dishCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="del != null">
+        #{del,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update s_dish_category
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.dishCategoryName != null">
+        dish_category_name = #{record.dishCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rank != null">
+        rank = #{record.rank,jdbcType=INTEGER},
+      </if>
+      <if test="record.del != null">
+        del = #{record.del,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update s_dish_category
+    set id = #{record.id,jdbcType=INTEGER},
+      dish_category_name = #{record.dishCategoryName,jdbcType=VARCHAR},
+      rank = #{record.rank,jdbcType=INTEGER},
+      del = #{record.del,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sell.model.DishCategory">
+    update s_dish_category
+    <set>
+      <if test="dishCategoryName != null">
+        dish_category_name = #{dishCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="del != null">
+        del = #{del,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sell.model.DishCategory">
+    update s_dish_category
+    set dish_category_name = #{dishCategoryName,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=INTEGER},
+      del = #{del,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 新增分类 -->
+  <insert id="addCategory" parameterType="com.sell.model.DishCategory">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_dish_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dishCategoryName != null">
+        dish_category_name,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="del != null">
+        del,
+      </if>
+      <if test="createTime != null">
+        create_time
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dishCategoryName != null">
+        #{dishCategoryName},
+      </if>
+      <if test="rank != null">
+        #{rank},
+      </if>
+      <if test="del != null">
+        #{del},
+      </if>
+       <if test="createTime != null">
+        #{createTime}
+      </if>
+    </trim>
+  </insert>
+  
+<!-- 修改菜品分类 -->
+  <update id="updateCategory"  parameterType="com.sell.model.DishCategory" >
+       update s_dish_category set 
+       <if test="dishCategoryName != null">
+          dish_category_name = #{dishCategoryName},
+       </if>
+       <if test="rank != null">
+         rank = #{rank},
+       </if>
+       <if test="del != null">
+         del = #{del}
+       </if>
+        where id=#{id}
+  </update>
+  
+  <select id="listCategory" resultType="com.sell.model.DishCategory">
+       SELECT * FROM s_dish_category
+     where
+          del=0
+          <if test="dishCategoryName != null">
+             and  dish_category_name LIKE '%${dishCategoryName}%'
+          </if>
+       order by rank 
+  </select>
+  
+  <select id="getDishCategory" parameterType="java.lang.Integer" resultType="com.sell.model.DishCategory">
+     select * from s_dish_category where id=#{id}
+  </select>
+</mapper>

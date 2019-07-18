@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator.properties"/>
+    <context id="MySqlContext" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 为模型生成序列化方法-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!-- 为生成的Java模型创建一个toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <commentGenerator type="com.sell.CommentGenerator.MyCommentGenerator">
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressDate" value="false"/>
+            <property name="addRemarkComments" value="false"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.connectionURL}"
+                        userId="${jdbc.userId}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <javaModelGenerator targetPackage="com.sell.model" targetProject="./src/main/java"/>
+
+        <sqlMapGenerator targetPackage="com.sell.mapper" targetProject="./src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sell.mapper"
+                             targetProject="./src/main/resources"/>
+        
+    <!--     生成对应表及类名
+		 <table tableName="s_dish" domainObjectName="Dish" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+        生成对应表及类名
+		 <table tableName="s_chef" domainObjectName="Chef" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+        生成对应表及类名
+		 <table tableName="s_chef_calendar" domainObjectName="ChefCalendar" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+        生成对应表及类名
+		 <table tableName="s_dish_category" domainObjectName="DishCategory" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+        生成对应表及类名
+		 <table tableName="s_home_advertise" domainObjectName="HomeAdvertise" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+        生成对应表及类名
+		 <table tableName="s_materials" domainObjectName="Materials" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+        生成对应表及类名
+		 <table tableName="s_set_meal" domainObjectName="SetMeal" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+         生成对应表及类名
+		 <table tableName="s_chef_dish" domainObjectName="ChefDish" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table> -->
+        <!-- <table tableName="s_town" domainObjectName="Town" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table> 
+        <table tableName="s_evaluate" domainObjectName="Evaluate" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>-->
+        <table tableName="s_turnkey_company" domainObjectName="TurnkeyCompany" enableCountByExample="true"
+            enableUpdateByExample="true" enableDeleteByExample="true"
+            enableSelectByExample="true" selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true" />
+        </table>
+
+    </context>
+</generatorConfiguration>

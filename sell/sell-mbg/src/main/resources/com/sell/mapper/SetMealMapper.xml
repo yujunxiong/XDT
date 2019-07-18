@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sell.mapper.SetMealMapper">
+  <resultMap id="BaseResultMap" type="com.sell.model.SetMeal">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="chef_id" jdbcType="INTEGER" property="chefId" />
+    <result column="dish_id" jdbcType="INTEGER" property="dishId" />
+    <result column="cold_dish_num" jdbcType="INTEGER" property="coldDishNum" />
+    <result column="hot_dish_num" jdbcType="INTEGER" property="hotDishNum" />
+    <result column="fruit_num" jdbcType="INTEGER" property="fruitNum" />
+    <result column="dessert_num" jdbcType="INTEGER" property="dessertNum" />
+    <result column="real_price" jdbcType="DECIMAL" property="realPrice" />
+    <result column="anticipated_price" jdbcType="DECIMAL" property="anticipatedPrice" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="increment_free" jdbcType="DECIMAL" property="incrementFree" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, chef_id, dish_id, cold_dish_num, hot_dish_num, fruit_num, dessert_num, 
+    real_price, anticipated_price, company_id, comment_num, order_num, score, description, 
+    increment_free
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_set_meal
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_set_meal
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sell.model.SetMeal">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_set_meal (name, chef_id, dish_id, 
+      cold_dish_num, hot_dish_num, fruit_num, 
+      dessert_num, real_price, anticipated_price, 
+      company_id, comment_num, order_num, 
+      score, description, increment_free
+      )
+    values (#{name,jdbcType=VARCHAR}, #{chefId,jdbcType=INTEGER}, #{dishId,jdbcType=INTEGER}, 
+      #{coldDishNum,jdbcType=INTEGER}, #{hotDishNum,jdbcType=INTEGER}, #{fruitNum,jdbcType=INTEGER}, 
+      #{dessertNum,jdbcType=INTEGER}, #{realPrice,jdbcType=DECIMAL}, #{anticipatedPrice,jdbcType=DECIMAL}, 
+      #{companyId,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, #{orderNum,jdbcType=INTEGER}, 
+      #{score,jdbcType=DOUBLE}, #{description,jdbcType=VARCHAR}, #{incrementFree,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sell.model.SetMeal">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_set_meal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="chefId != null">
+        chef_id,
+      </if>
+      <if test="dishId != null">
+        dish_id,
+      </if>
+      <if test="coldDishNum != null">
+        cold_dish_num,
+      </if>
+      <if test="hotDishNum != null">
+        hot_dish_num,
+      </if>
+      <if test="fruitNum != null">
+        fruit_num,
+      </if>
+      <if test="dessertNum != null">
+        dessert_num,
+      </if>
+      <if test="realPrice != null">
+        real_price,
+      </if>
+      <if test="anticipatedPrice != null">
+        anticipated_price,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="commentNum != null">
+        comment_num,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="incrementFree != null">
+        increment_free,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="chefId != null">
+        #{chefId,jdbcType=INTEGER},
+      </if>
+      <if test="dishId != null">
+        #{dishId,jdbcType=INTEGER},
+      </if>
+      <if test="coldDishNum != null">
+        #{coldDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotDishNum != null">
+        #{hotDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="fruitNum != null">
+        #{fruitNum,jdbcType=INTEGER},
+      </if>
+      <if test="dessertNum != null">
+        #{dessertNum,jdbcType=INTEGER},
+      </if>
+      <if test="realPrice != null">
+        #{realPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="anticipatedPrice != null">
+        #{anticipatedPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="incrementFree != null">
+        #{incrementFree,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update s_set_meal
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chefId != null">
+        chef_id = #{record.chefId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dishId != null">
+        dish_id = #{record.dishId,jdbcType=INTEGER},
+      </if>
+      <if test="record.coldDishNum != null">
+        cold_dish_num = #{record.coldDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotDishNum != null">
+        hot_dish_num = #{record.hotDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.fruitNum != null">
+        fruit_num = #{record.fruitNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.dessertNum != null">
+        dessert_num = #{record.dessertNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.realPrice != null">
+        real_price = #{record.realPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.anticipatedPrice != null">
+        anticipated_price = #{record.anticipatedPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentNum != null">
+        comment_num = #{record.commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderNum != null">
+        order_num = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=DOUBLE},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incrementFree != null">
+        increment_free = #{record.incrementFree,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update s_set_meal
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      chef_id = #{record.chefId,jdbcType=INTEGER},
+      dish_id = #{record.dishId,jdbcType=INTEGER},
+      cold_dish_num = #{record.coldDishNum,jdbcType=INTEGER},
+      hot_dish_num = #{record.hotDishNum,jdbcType=INTEGER},
+      fruit_num = #{record.fruitNum,jdbcType=INTEGER},
+      dessert_num = #{record.dessertNum,jdbcType=INTEGER},
+      real_price = #{record.realPrice,jdbcType=DECIMAL},
+      anticipated_price = #{record.anticipatedPrice,jdbcType=DECIMAL},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      comment_num = #{record.commentNum,jdbcType=INTEGER},
+      order_num = #{record.orderNum,jdbcType=INTEGER},
+      score = #{record.score,jdbcType=DOUBLE},
+      description = #{record.description,jdbcType=VARCHAR},
+      increment_free = #{record.incrementFree,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sell.model.SetMeal">
+    update s_set_meal
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="chefId != null">
+        chef_id = #{chefId,jdbcType=INTEGER},
+      </if>
+      <if test="dishId != null">
+        dish_id = #{dishId,jdbcType=INTEGER},
+      </if>
+      <if test="coldDishNum != null">
+        cold_dish_num = #{coldDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotDishNum != null">
+        hot_dish_num = #{hotDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="fruitNum != null">
+        fruit_num = #{fruitNum,jdbcType=INTEGER},
+      </if>
+      <if test="dessertNum != null">
+        dessert_num = #{dessertNum,jdbcType=INTEGER},
+      </if>
+      <if test="realPrice != null">
+        real_price = #{realPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="anticipatedPrice != null">
+        anticipated_price = #{anticipatedPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        comment_num = #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="incrementFree != null">
+        increment_free = #{incrementFree,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sell.model.SetMeal">
+    update s_set_meal
+    set name = #{name,jdbcType=VARCHAR},
+      chef_id = #{chefId,jdbcType=INTEGER},
+      dish_id = #{dishId,jdbcType=INTEGER},
+      cold_dish_num = #{coldDishNum,jdbcType=INTEGER},
+      hot_dish_num = #{hotDishNum,jdbcType=INTEGER},
+      fruit_num = #{fruitNum,jdbcType=INTEGER},
+      dessert_num = #{dessertNum,jdbcType=INTEGER},
+      real_price = #{realPrice,jdbcType=DECIMAL},
+      anticipated_price = #{anticipatedPrice,jdbcType=DECIMAL},
+      company_id = #{companyId,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      score = #{score,jdbcType=DOUBLE},
+      description = #{description,jdbcType=VARCHAR},
+      increment_free = #{incrementFree,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <resultMap id="mealResponse" type="com.sell.model.response.MealResponse">
+  	<result column="id" property="id"/>
+  	<result column="mealName" property="mealName"/>
+  	<result column="companyName" property="companyName"/>
+  	<result column="realPrice" property="price"/>
+  	<result column="orderNum" property="orderNum"/>
+  	<result column="score" property="score"/>
+  	<result column="commentNum" property="commentNum"/>
+  	<result column="address" property="address"/>
+  	<result column="spic" property="pic"/>
+  	<result column="recommend" property="recommend"/>
+  	<result column="dinner_num" property="dinnerNum"/>
+  	<collection property="labels" ofType="com.sell.model.response.MealResponse$Labels">
+  		<result column="lid" property="id"/>
+  		<result column="lname" property="name"/>
+  	</collection>
+  </resultMap>
+  
+  <!-- 条件查找套餐列表 -->
+  <select id="selectList" resultMap="mealResponse" parameterType="com.sell.model.request.MealParams">
+  		SELECT 
+  			h.id,
+			h.mealName,
+			h.realPrice,
+			h.spic,
+			h.dinner_num,
+			h.score,
+			h.orderNum,
+			h.recommend,
+			h.commentNum,
+			h.mealCategoryName,
+			h.companyName,
+			h.address,
+			l.`name` lname,
+			l.id lid
+		FROM(
+	  		SELECT 
+	  			s.id,
+				s.`name` mealName,
+				ROUND((SELECT SUM(d.price) FROM s_dish d LEFT JOIN s_meal_dish m ON m.dish_id=d.id WHERE m.meal_id=s.id))+t.service_charge realPrice,
+				s.pic spic,
+				s.dinner_num,
+				(SELECT ROUND(SUM(score)/COUNT(*),1) FROM s_evaluate WHERE type=0 AND set_meal_id=s.id) score,
+				s.order_num orderNum,
+				s.recommend,
+				(SELECT COUNT(*) FROM s_evaluate WHERE type=0 AND set_meal_id=s.id) commentNum,
+				c.meal_category_name mealCategoryName,
+				t.company_name companyName,
+				CONCAT(t.county,'-',t.town) address
+			FROM s_set_meal s
+			LEFT JOIN s_meal_category c ON s.category_id=c.id
+			LEFT JOIN s_chef f ON s.chef_id=f.id
+			LEFT JOIN s_turnkey_company t ON f.company_id=t.id
+			WHERE s.status=1 AND s.del=0
+			<if test="townCode!=null and townCode!=''">
+				AND t.town_code=#{townCode}
+			</if>
+			<if test="endPrice!=null and endPrice!='' and startPrice!=null and startPrice!=''">
+				AND (ROUND(
+				(
+					SELECT
+						SUM(d.price)
+					FROM
+						s_dish d
+					LEFT JOIN s_meal_dish m ON m.dish_id = d.id
+					WHERE
+						m.meal_id = s.id
+				)
+			) + t.service_charge)  between #{startPrice} and #{endPrice}
+			</if>
+			<if test="categoryId!=null and categoryId!=''">
+				AND c.id=#{categoryId}
+			</if>
+			<if test="chefOrComapany!=null and chefOrComapany!=''">
+				AND (t.company_name LIKE '%${chefOrComapany}' OR f.chef_name LIKE '%${chefOrComapany}')
+			</if>
+			<choose>
+				<when test="rank==1">
+					GROUP BY orderNum DESC
+				</when>
+				<when test="rank==2">
+					GROUP BY commentNum DESC
+				</when>
+				<when test="rank==3">
+					GROUP BY score DESC
+				</when>
+			</choose>
+			LIMIT #{pageNum},#{pageSize}
+		) h
+		LEFT JOIN s_label l ON h.id=l.meal_id
+  </select>
+  
+  <resultMap id="details" type="com.sell.model.vo.SetMealVo">
+  		<result column="sid" property="id" />
+  		<result column="sname" property="name"/>
+  		<result column="dinner_num" property="dinnerNum"/>
+  		<result column="hot_dish_num" property="hotDishNum"/>
+  		<result column="cold_dish_num" property="coldDishNum"/>
+  		<result column="dessert_num" property="dessertNum"/>
+  		<result column="anticipated_price" property="anticipatedPrice"/>
+  		<result column="spic" property="pic"/>
+  		<result column="fruit_num" property="fruitNum"/>
+  		<result column="realPrice" property="anticipatedPrice"/>
+  		<result column="score" property="chefScore"/>
+  		<result column="chef_name" property="chefName"/>
+  		<result column="company_name" property="companyName"/>
+  		<result column="address" property="address"/>
+  		<result column="chefPic" property="chefPic"/>
+		<collection property="dishCategory" ofType="com.sell.model.DishCategory">
+			<result column="cid" property="id" />
+			<result column="rank" property="rank" />
+			<result column="dish_category_name" property="dishCategoryName"/>
+			<collection property="dish" ofType="com.sell.model.Dish">
+				<result column="did" property="id" />
+				<result column="vendor_spu_name" property="vendorSpuName" />
+				<result column="material" property="material" />
+				<result column="dpic" property="pic" />
+				<result column="price" property="price" />
+				<result column="album_pics" property="albumPics" />
+				<result column="category_id" property="categoryId" />
+				<result column="company_id" property="companyId" />
+				<result column="description" property="description" />
+			</collection>
+		</collection>  
+  </resultMap>
+  <!-- 查找套餐详情 -->
+  <select id="selectDetails" resultMap="details">
+  	SELECT 
+  		s.id sid,
+		s.`name` sname,
+		s.dinner_num,
+		s.hot_dish_num,
+		s.cold_dish_num,
+		s.dessert_num,
+		s.fruit_num,
+		s.anticipated_price,
+		s.pic spic,
+		ROUND((SELECT SUM(d.price) FROM s_dish d LEFT JOIN s_meal_dish m ON m.dish_id=d.id WHERE m.meal_id=s.id)) realPrice,
+		c.id cid,
+		c.rank,
+		c.dish_category_name,
+		d.id did,
+		d.vendor_spu_name,
+		d.price,
+		d.pic dpic,
+		d.material,
+		d.album_pics,
+		d.category_id,
+		d.company_id,
+		d.description,
+		(SELECT ROUND(SUM(score)/COUNT(*),1) FROM s_evaluate WHERE type=0 AND set_meal_id=s.id) score,
+		f.chef_name,
+		f.pic chefPic,
+		p.company_name
+	FROM s_set_meal s
+	LEFT JOIN s_meal_dish m ON m.meal_id=s.id
+	LEFT JOIN s_dish d ON m.dish_id=d.id
+	LEFT JOIN s_dish_category c ON d.category_id=c.id
+	LEFT JOIN s_chef f ON s.chef_id=f.id
+	LEFT JOIN s_turnkey_company p ON s.company_id=p.id 
+	WHERE s.id=#{mealId}
+  </select>
+  <!-- 查找菜品替换列表 -->
+  <select id="getDishList" resultType="com.sell.model.Dish">
+  	SELECT 
+		d.id,
+		d.vendor_spu_name,
+		d.price,
+		d.pic,
+		d.material,
+		d.album_pics,
+		d.category_id,
+		d.company_id,
+		d.description
+	FROM s_dish d
+	WHERE d.id NOT IN(#{dishId}) AND d.category_id=#{categoryId} AND d.company_id=#{companyId}
+  </select>
+  
+<!--查询菜品 -->
+<select id="getDishs" resultType="com.sell.model.Dish">
+    SELECT * FROM s_dish WHERE id in 
+    <foreach collection="dishIds" index="index" item="item"  open="(" close=")" separator=",">
+       #{item}
+    </foreach>
+</select>
+
+<insert id="add" parameterType="com.sell.model.SetMeal">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_set_meal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="chefId != null">
+        chef_id,
+      </if>
+      <if test="coldDishNum != null">
+        cold_dish_num,
+      </if>
+      <if test="hotDishNum != null">
+        hot_dish_num,
+      </if>
+      <if test="fruitNum != null">
+        fruit_num,
+      </if>
+      <if test="dessertNum != null">
+        dessert_num,
+      </if>
+      <if test="realPrice != null">
+        real_price,
+      </if>
+      <if test="anticipatedPrice != null">
+        anticipated_price,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="commentNum != null">
+        comment_num,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+       <if test="dinnerNum != null">
+        dinner_num,
+      </if>
+       <if test="pic != null">
+        pic,
+      </if>
+       <if test="albumPics != null">
+        album_pics,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="incrementFree != null">
+        increment_free,
+      </if>
+      <if test="createTime != null">
+        create_time
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="chefId != null">
+        #{chefId,jdbcType=INTEGER},
+      </if>
+      <if test="coldDishNum != null">
+        #{coldDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotDishNum != null">
+        #{hotDishNum,jdbcType=INTEGER},
+      </if>
+      <if test="fruitNum != null">
+        #{fruitNum,jdbcType=INTEGER},
+      </if>
+      <if test="dessertNum != null">
+        #{dessertNum,jdbcType=INTEGER},
+      </if>
+      <if test="realPrice != null">
+        #{realPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="anticipatedPrice != null">
+        #{anticipatedPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+        <if test="dinnerNum != null">
+        #{dinnerNum,jdbcType=INTEGER},
+      </if>
+       <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
+       <if test="albumPics != null">
+        #{albumPics,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="incrementFree != null">
+        #{incrementFree,jdbcType=DECIMAL},
+      </if>
+       <if test="createTime != null">
+        #{createTime}
+      </if>
+    </trim>
+</insert>
+
+<!-- 关联菜品和套餐 -->
+<insert id="relationDish">
+    insert into s_meal_dish (dish_id,meal_id) values 
+    <foreach collection="dishIds" index="index" item="item"  separator=",">
+      (#{item},#{id})
+    </foreach>
+</insert>
+
+<!-- 更新套餐信息 -->
+<update id="update" parameterType="com.sell.model.SetMeal">
+    update s_set_meal
+    <set>
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="name != null">
+        name = #{name},
+      </if>
+      <if test="chefId != null">
+        chef_id = #{chefId},
+      </if>
+      <if test="coldDishNum != null">
+        cold_dish_num = #{coldDishNum},
+      </if>
+      <if test="hotDishNum != null">
+        hot_dish_num = #{hotDishNum},
+      </if>
+      <if test="fruitNum != null">
+        fruit_num = #{fruitNum},
+      </if>
+      <if test="dessertNum != null">
+        dessert_num = #{dessertNum},
+      </if>
+      <if test="realPrice != null">
+        real_price = #{realPrice},
+      </if>
+      <if test="anticipatedPrice != null">
+        anticipated_price = #{anticipatedPrice},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId},
+      </if>
+      <if test="commentNum != null">
+        comment_num = #{commentNum},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum},
+      </if>
+      <if test="score != null">
+        score = #{score},
+      </if>
+       <if test="dinnerNum != null">
+        dinner_num=#{dinnerNum},
+      </if>
+       <if test="pic != null">
+        pic=#{pic},
+      </if>
+       <if test="albumPics != null">
+        album_pics=#{albumPics},
+      </if>
+      <if test="description != null">
+        description = #{description},
+      </if>
+      <if test="incrementFree != null">
+        increment_free = #{incrementFree},
+      </if>
+    </set>
+    where id=#{id}
+</update>
+
+<!-- 查询套餐关联的菜品id -->
+<select id="getRelationSetmealAndDish" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+   SELECT dish_id FROM s_meal_dish WHERE meal_id=#{id}
+</select>
+
+<delete id="delSetDish" >
+   DELETE FROM s_meal_dish  WHERE meal_id=#{id} and dish_id IN
+    <foreach collection="oldDishIds" index="index" item="item"  open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+</delete>
+
+<!-- 删除套餐 -->
+<delete id="delete" >
+   DELETE FROM s_set_meal WHERE id=#{id}
+</delete>
+
+<!-- 套餐列表 -->
+<select id="list" resultType="com.sell.model.vo.SetMealVo">
+   SELECT
+      s.id,
+      s.name,
+      s.cold_dish_num coldDishNum,
+      s.hot_dish_num hotDishNum,
+      s.fruit_num fruitNum,
+      s.real_price realPrice,
+      s.anticipated_price anticipatedPrice,
+	  s.description,
+	  s.status,
+	  s.dinner_num dinnerNum,
+	  s.pic,
+	  s.album_pics albumPics,
+	  c.chef_name chefName,
+	  t.company_name companyName,
+	  m.meal_category_name categoryName
+	FROM
+		s_set_meal s
+	LEFT JOIN s_chef c ON s.chef_id = c.id
+	LEFT JOIN s_turnkey_company t ON s.company_id = t.id
+	LEFT JOIN s_meal_category m ON m.id = s.category_id
+	<where>
+	    <if test=" chefId != null">
+	       c.id=#{chefId}
+	    </if>
+	    <if test="categoryId != null">
+	       AND m.id=#{categoryId}
+	    </if>
+	    <if test="companyId != null">
+	       AND t.id=#{companyId}
+	    </if>
+	    <if test="status != null">
+	       AND s.status =#{status}
+	    </if>
+	    <if test="name">
+	       AND s.name LIKE '%${name}%' 
+	    </if>
+	</where>	
+</select>
+
+ <resultMap id="listSetMealInfoId" type="com.sell.model.vo.SetMealVo">
+  		<result column="id" property="id" />
+  		<result column="name" property="name"/>
+  		<result column="dinner_num" property="dinnerNum"/>
+  		<result column="hotDishNum" property="hotDishNum"/>
+  		<result column="coldDishNum" property="coldDishNum"/>
+  		<result column="dessertNum" property="dessertNum"/>
+  		<result column="anticipatedPrice" property="anticipatedPrice"/>
+  		<result column="pic" property="pic"/>
+  		<result column="fruitNum" property="fruitNum"/>
+  		<result column="realPrice" property="anticipatedPrice"/>
+  		<result column="score" property="chefScore"/>
+  		<result column="chefName" property="chefName"/>
+  		<result column="companyName" property="companyName"/>
+  		<result column="address" property="address"/>
+  		<result column="chefPic" property="chefPic"/>
+		<collection property="dishCategory" ofType="com.sell.model.DishCategory">
+			<result column="categoryId" property="id" />
+			<result column="rank" property="rank" />
+			<result column="dishCategoryName" property="dishCategoryName"/>
+			<collection property="dish" ofType="com.sell.model.Dish">
+				<result column="dishId" property="id" />
+				<result column="vendorSpuName" property="vendorSpuName" />
+				<result column="material" property="material" />
+				<result column="dpic" property="pic" />
+				<result column="price" property="price" />
+				<result column="albumPics" property="albumPics" />
+				<result column="companyId" property="companyId" />
+				<result column="dishDescription" property="description" />
+			</collection>
+		</collection>  
+  </resultMap>
+<!-- 套餐详情 -->
+<select id="listSetMealInfo" parameterType="java.lang.Integer" resultMap="listSetMealInfoId" >
+    SELECT
+      s.id,
+      s.name,
+      s.cold_dish_num coldDishNum,
+      s.hot_dish_num hotDishNum,
+      s.fruit_num fruitNum,
+      s.real_price realPrice,
+      s.anticipated_price anticipatedPrice,
+	  s.description,
+	  s.status,
+	  s.dinner_num dinnerNum,
+	  s.pic,
+	  s.album_pics albumPics,
+	  c.chef_name chefName,
+	  t.company_name companyName,
+	  m.meal_category_name categoryName,
+      d.id dishId,
+      d.company_id companyId,
+      d.description dishDescription,
+      d.material,
+      d.price,
+      d.vendor_spu_name vendorSpuName,
+      dc.dish_category_name dishCategoryName,
+      dc.id categoryId,
+      dc.rank
+	FROM
+		s_set_meal s
+	LEFT JOIN s_chef c ON s.chef_id = c.id
+	LEFT JOIN s_turnkey_company t ON s.company_id = t.id
+	LEFT JOIN s_meal_category m ON m.id = s.category_id
+    LEFT JOIN s_meal_dish md ON s.id=md.meal_id
+    LEFT JOIN s_dish d ON d.id=md.dish_id
+    LEFT JOIN s_dish_category dc ON dc.id=d.category_id
+    where s.id=#{id}
+</select>
+
+<!-- 套餐分类 列表-->
+<select id="listSetMealCategory" resultType="com.sell.model.MealCategory">
+    SELECT * FROM s_meal_category where del=0 ORDER BY rank asc
+</select>
+
+<select id="getRecommendMeal" resultMap="mealResponse">
+	SELECT 
+  			s.id,
+			s.`name` mealName,
+			ROUND((SELECT SUM(d.price) FROM s_dish d LEFT JOIN s_meal_dish m ON m.dish_id=d.id WHERE m.meal_id=s.id))+t.service_charge realPrice,
+			s.pic spic,
+			s.dinner_num,
+			(SELECT ROUND(SUM(score)/COUNT(*),1) FROM s_evaluate WHERE type=0 AND set_meal_id=s.id) score,
+			s.order_num orderNum,
+			s.recommend,
+			(SELECT COUNT(*) FROM s_evaluate WHERE type=0 AND set_meal_id=s.id) commentNum,
+			c.meal_category_name mealCategoryName,
+			t.company_name companyName,
+			CONCAT(t.county,'-',t.town) address,
+			l.`name` lname,
+			l.id lid
+		FROM s_set_meal s
+		LEFT JOIN s_meal_category c ON s.category_id=c.id
+		LEFT JOIN s_label l ON s.id=l.meal_id
+		LEFT JOIN s_chef f ON s.chef_id=f.id
+		LEFT JOIN s_turnkey_company t ON f.company_id=t.id
+		WHERE s.status=1 AND s.del=0 and s.recommend=1
+</select>
+</mapper>

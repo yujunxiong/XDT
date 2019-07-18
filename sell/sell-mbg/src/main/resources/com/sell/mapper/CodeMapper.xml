@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sell.mapper.CodeMapper">
+  <resultMap id="BaseResultMap" type="com.sell.model.Code">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_code" jdbcType="VARCHAR" property="parentCode" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="del" jdbcType="INTEGER" property="del" />
+    <result column="salesman_id" jdbcType="INTEGER" property="salesmanId" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, parent_code, code, create_time, del, salesman_id
+  </sql>
+
+  
+  <select id="getCodeByCityCode" resultType="com.sell.model.Code" parameterType="string">
+  		SELECT <include refid="Base_Column_List" /> FROM s_code WHERE parent_code=#{code} AND del=0
+  </select>
+  
+  <select id="getCode" resultType="com.sell.model.Code" >
+  		SELECT <include refid="Base_Column_List" /> FROM s_code WHERE del=0
+  </select>
+</mapper>

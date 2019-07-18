@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sell.mapper.DishMapper">
+  <resultMap id="BaseResultMap" type="com.sell.model.Dish">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="vendor_spu_name" jdbcType="VARCHAR" property="vendorSpuName" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, vendor_spu_name, price, description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_dish
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from s_dish
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sell.model.Dish">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_dish (vendor_spu_name, price, description
+      )
+    values (#{vendorSpuName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sell.model.Dish">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_dish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vendorSpuName != null">
+        vendor_spu_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vendorSpuName != null">
+        #{vendorSpuName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update s_dish
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.vendorSpuName != null">
+        vendor_spu_name = #{record.vendorSpuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update s_dish
+    set id = #{record.id,jdbcType=INTEGER},
+      vendor_spu_name = #{record.vendorSpuName,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      description = #{record.description,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sell.model.Dish">
+    update s_dish
+    <set>
+      <if test="vendorSpuName != null">
+        vendor_spu_name = #{vendorSpuName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sell.model.Dish">
+    update s_dish
+    set vendor_spu_name = #{vendorSpuName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="addDish" parameterType="com.sell.model.Dish">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into s_dish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="vendorSpuName != null">
+        vendor_spu_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="material != null">
+        material,
+      </if>
+       <if test="companyId != null">
+       company_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="albumPics != null">
+        album_pics,
+      </if>
+      <if test="categoryId != null">
+        category_id
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="vendorSpuName != null">
+        #{vendorSpuName},
+      </if>
+      <if test="price != null">
+        #{price},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="material != null">
+        #{material},
+      </if>
+       <if test="companyId != null">
+        #{companyId},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="pic != null">
+        #{pic},
+      </if>
+      <if test="albumPics != null">
+        #{albumPics},
+      </if>
+       <if test="categoryId != null">
+        #{categoryId}
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 更新菜品 -->
+  <update id="updateDish" parameterType="com.sell.model.Dish">
+      update s_dish
+      set 
+      <if test="vendorSpuName !=null">
+         vendor_spu_name = #{vendorSpuName},
+      </if>
+      <if test="price !=null">
+          price = #{price},
+      </if>
+      <if test="description !=null">
+         description = #{description},
+      </if>
+      <if test="categoryId !=null">
+         category_id=#{categoryId},
+      </if>
+      <if test="pic !=null">
+        pic=#{pic},
+       </if>
+       <if test="material !=null">
+         material=#{material},
+      </if>
+      <if test="companyId != null">
+        company_id=#{companyId},
+      </if>
+      <if test="albumPics !=null">
+         album_pics=#{albumPics}
+      </if>
+      where id = #{id}
+  </update>
+  
+ <!--  删除菜品 -->
+ <delete id="deleteDish" parameterType="java.lang.Integer">
+    DELETE FROM s_dish where id=#{id}
+ </delete>
+ 
+ <resultMap id="resultListDish" type="com.sell.model.Dish">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="vendor_spu_name"  property="vendorSpuName" />
+    <result column="price"  property="price" />
+    <result column="description"  property="description" />
+    <result column="pic"  property="pic" />
+    <result column="album_pics"  property="albumPics" />
+    <association property="dishCategory" javaType="com.sell.model.DishCategory">
+	    <id column="categoryId" property="id"/>
+		<result column="dish_category_name" property="dishCategoryName"/>
+	</association>
+  </resultMap>
+  <!-- 查询菜品列表 -->
+ <select id="listDish" resultMap="resultListDish">
+    SELECT
+	  d.id,
+	  d.vendor_spu_name,
+	  d.price,
+	  d.description,
+	  d.material,
+	  d.pic,
+	  d.album_pics,
+	  c.id categoryId,
+	  c.dish_category_name
+	FROM 
+		s_dish d
+	LEFT JOIN s_dish_category c ON d.category_id = c.id
+	<where>
+	   <if test="vendorSpuName !=null">
+	      vendor_spu_name LIKE '%${vendorSpuName}%'
+	   </if>
+	    <if test="categoryId !=null">
+	      and category_id=#{categoryId}
+	   </if> 
+	    <if test="companyId !=null">
+	      and company_id=#{companyId}
+	   </if> 
+	</where>
+ </select>
+ 
+<!-- 根据菜品id查询套餐 -->
+<select id="selDishAndSetMeal" parameterType="java.lang.Integer"  resultType="com.sell.model.SetMeal">
+   SELECT
+		s.*
+	FROM
+		s_set_meal s
+	LEFT JOIN s_meal_dish m ON s.id = m.meal_id
+	LEFT JOIN s_dish d ON m.dish_id = d.id
+	where d.id=#{id}
+</select>
+
+<!-- 获取菜品信息 -->
+<select id="getDish" parameterType="java.lang.Integer"  resultType="com.sell.model.Dish">
+    select * from s_dish where id=#{id}
+</select>
+</mapper>

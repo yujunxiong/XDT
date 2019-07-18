@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sell.mapper.MealCategoryMapper">
+	<sql id="Base_Column_List">
+		id,meal_category_name,rank,del	
+	</sql>
+	
+	<select id="select" resultType="com.sell.model.MealCategory">
+		SELECT <include refid="Base_Column_List"/> FROM s_meal_category GROUP BY rank
+	</select>
+</mapper>
